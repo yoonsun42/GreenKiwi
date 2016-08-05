@@ -11,6 +11,7 @@ var users = require('./routes/users');
 var app = express();
 var asyncPolling = require('async-polling');
 var poll = require('./modules/poll.js');
+var findKeywords = require('./modules/findKeywords.js');
 var async = require('async');
 var mecab = require('mecab-ya');
 

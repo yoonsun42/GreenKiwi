@@ -8,4 +8,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'GreenKiwi', arr : arr });
 });
 
+router.get('/hello', function(req,res,next){
+  res.render('hello');
+});
+
 module.exports = router;

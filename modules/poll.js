@@ -1,7 +1,6 @@
 /**
  * Created by jaejeon on 2016-08-05.
  */
-
 var cheerio = require('cheerio');
 var request = require('request');
 
@@ -17,4 +16,3 @@ module.exports = function(words, callback){
         callback(null, 0);
     });
 };
-
