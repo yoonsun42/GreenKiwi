@@ -11,6 +11,7 @@ var users = require('./routes/users');
 var app = express();
 var asyncPolling = require('async-polling');
 var poll = require('./modules/poll.js');
+var async = require('async');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,15 +29,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
-var i = 0;
-var result = [];
-
+var words = [];
 var polling = asyncPolling(function (end){
-  poll(result);
-  console.log(result+"?");
-  //여기 뒤에다가 result array 넣어주면 될듯한데 https://github.com/cGuille/async-polling/blob/master/demo/demo.js
-  end(null, '#' + i + ' wait a second...');
-}, 5000);
+  async.series([
+     function(callback){
+        words = [];
+        poll(words, callback);
+     }
+  ], function(err, result){
+    //console.log(words);
+    end(null, '#' + result + ' wait a second...');
+  });
+}, 3000);
 
 polling.run();
 
