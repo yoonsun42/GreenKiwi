@@ -38,7 +38,7 @@ var polling = asyncPolling(function (end){
         poll(words, callback);
      }
   ], function(err, result){
-    //console.log(words);
+    console.log(words);
     end(null, '#' + result + ' wait a second...');
   });
 }, 3000);

@@ -34,10 +34,7 @@ module.exports = function(poll_result){
                 if(err) console.log(err);
                 else{
                     result.rss.channel[0].item.forEach(function(item){
-                        mecab.pos(item.title, function(err, result){
 
-                            console.log(result);
-                        });
                     });
                 }
             });
