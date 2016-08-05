@@ -13,6 +13,7 @@ var asyncPolling = require('async-polling');
 var poll = require('./modules/poll.js');
 var findKeywords = require('./modules/findKeywords.js');
 var async = require('async');
+var mecab = require('mecab-ya');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -44,6 +45,36 @@ var polling = asyncPolling(function (end){
 }, 3000);
 
 polling.run();
+
+
+
+var text = '아버지가방에들어가신다';
+
+mecab.pos(text, function (err, result) {
+  console.log(result+'?');
+  /*
+   [ [ '아버지', 'NNG' ],
+   [ '가', 'JKS' ],
+   [ '방', 'NNG' ],
+   [ '에', 'JKB' ],
+   [ '들어가', 'VV' ],
+   [ '신다', 'EP+EC' ] ]
+   */
+});
+
+mecab.morphs(text, function (err, result) {
+  console.log(result+'!');
+  /*
+   [ '아버지', '가', '방', '에', '들어가', '신다' ]
+   */
+});
+
+mecab.nouns(text, function (err, result) {
+  console.log(result);
+  /*
+   [ '아버지', '방' ]
+   */
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
