@@ -9,8 +9,10 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+var asyncPolling = require('async-polling');
 var poll = require('./modules/poll.js');
 var findKeywords = require('./modules/findKeywords.js');
+var async = require('async');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,8 +30,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
-poll();
-findKeywords(['빅뱅', '류승우']);
+var words = [];
+var polling = asyncPolling(function (end){
+  async.series([
+     function(callback){
+        words = [];
+        poll(words, callback);
+     }
+  ], function(err, result){
+    //console.log(words);
+    end(null, '#' + result + ' wait a second...');
+  });
+}, 3000);
+
+polling.run();
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
