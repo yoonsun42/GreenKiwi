@@ -1,5 +1,8 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div#test
+    ul#mainbox
+      each val in arr
+        li
+          include item.jade

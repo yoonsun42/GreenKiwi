@@ -1,7 +1,11 @@
 doctype html
 html
   head
-    title= title
+    title #{title}
+    #container.row
+      span#title #{title}
+      span#history 히스토리
+      span#realtime 실시간이슈
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     block content
