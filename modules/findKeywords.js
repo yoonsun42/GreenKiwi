@@ -21,7 +21,7 @@ module.exports = function(poll_result){
     var options = {
         host: host,
         port: port,
-        path: uri + '?query=' + urlencode('박유환') + '&display=10&start=1&sort=sim',
+        path: uri + '?query=' + urlencode(poll_result[0]) + '&display=10&start=1&sort=sim',
         method: 'GET',
         headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
     };
@@ -77,6 +77,7 @@ module.exports = function(poll_result){
                             });
 
                         }], function(err,result) {
+                            console.log(sortedMap);
                         }
                     );
             });
