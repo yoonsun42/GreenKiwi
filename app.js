@@ -58,7 +58,7 @@ var polling = asyncPolling(function (end){
      },
      function(callback){
 	Tree.findOne({date: 'now'}, function(err,tree){
-	    tree = new Tree({date: 'now'});
+	    tree.topics = [];
 	    tree.save(function(err){callback(null,1)});
 	});
      }

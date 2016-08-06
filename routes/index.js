@@ -10,11 +10,16 @@ var Tree = mongoose.model('Tree', TreeSchema);
 /*GET home page. */
 router.get('/', function(req, res, next) {
   var arr = [];
-  
+  console.log("/ router"); 
   Tree.findOne({date: 'now'}, function(err, tree){
+    console.log(tree);
+    console.log("findOne executed");
     var idArr = tree.topics;
-    for(var i = 0; i < idArr; i++){
+    console.log(idArr);
+    for(var i = 0; i < idArr.length; i++){
+	console.log("for loop");
 	Kiwi.findOne({_id: idArr[i]}, function(err, kiwi){
+	  console.log("kiwi-topic: " + kiwi.topic);
 	  arr.push([kiwi.topic, ''+i, [kiwi.keywords[0], kiwi.keywords[1], kiwi.keywords[2], kiwi.keywords[3], kiwi.keywords[4]]]);
 	  if(arr.length == idArr.length) res.render('index', {title: 'GreenKiwi', arr: arr});
 	});
