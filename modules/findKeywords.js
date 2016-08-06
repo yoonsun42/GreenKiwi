@@ -7,7 +7,7 @@ var mecab = require('mecab-ya');
 var wordMap = new Map();
 var async = require('async');
 
-module.exports = function(poll_result){
+module.exports = function(){
 
     var client_id = 'PON8429nB5fozBKQR0bi';
     var client_secret = 'XmvIFNtvxN';
@@ -28,8 +28,6 @@ module.exports = function(poll_result){
 
 
     var req = https.request(options, function(res) {
-        console.log('STATUS: ' + res.statusCode);
-        console.log('HEADERS: ' + res.headers);
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
             parser.parseString(chunk, function(err,result){
@@ -40,7 +38,6 @@ module.exports = function(poll_result){
                     newsTitle = newsTitle.concat(newsList[i].title[0]);
                     newsDesc = newsDesc.concat(newsList[i].description[0]);
                 }
-                console.log(newsTitle);
                     var sortedMap = [];
                     async.series([
                         function(callback) {
