@@ -8,6 +8,9 @@ var async = require('async');
 var mongoose = require('mongoose');
 var KiwiSchema = require('../models/Kiwi.js');
 var Kiwi = mongoose.model('Kiwi', KiwiSchema);
+var TreeSchema = require('../models/Tree.js');
+var Tree = mongoose.model('Tree', TreeSchema);
+
 var format = require('date-format');
 
 module.exports = function(poll_result){
@@ -93,37 +96,32 @@ module.exports = function(poll_result){
                                 j++;
                             }
 
-                            Kiwi.findOne({ date : format('yyyy/MM/dd', new Date())}, function(err, item){
-                                if(item){
-                                    var flag = false;
-                                    for(var i = 0; i < item.topics.length && !flag; i++){
-                                        if(item.topics[i].topic == poll_result[0]) {
-                                            flag = true;
-                                            item.topics[i].count++;
-                                            item.topics[i].keywords = keywords;
-                                            item.topics[i].links = links;
-                                        }
-                                    }
-                                    if(!flag){ item.topics.push({
-                                        topic: poll_result[0], count: 1, keywords: keywords, links: links
-                                    }); }
-                                    while(!(i == item.topics.length || flag)){
-                                        item.save();
-                                    }
+                            Kiwi.findOne({topic : poll_result[0]}, function(err, kiwi){
+                                if(err) console.log(err);
+                               if(kiwi){
+                                   kiwi.keywords = keywords;
+                                   kiwi.count++;
+                                   kiwi.save();
+                               }
+                               else{
+                                   var newKiwi = new Kiwi({topic: poll_result[0], keywords: keywords, count: 1});
+                                   newKiwi.save(function(err, newKiwi) {
+                                       Tree.findOne({date: format('yyyy/MM/dd', new Date())}, function (err, tree) {
+                                            if (err) console.log(err);
+                                            if(tree){
+                                                tree.topics.push(newKiwi.ObjectId);
+                                            }
+                                            else{
+                                                var newTree = new Tree({date: format('yyyy/MM/dd', new Date())});
+                                                newTree.save(function(err, newTree){
+                                                    newTree.topics.push(newKiwi.ObjectId);
+                                                });
+                                            }
 
-                                }
-                                else{
-                                    var newKiwi = new Kiwi({ date: format('yyyy/MM/dd', new Date()),
-                                    topics: [{
-                                        topic : poll_result[0],
-                                        count : 1,
-                                        keywords: keywords,
-                                        links : links
-                                    }]});
-                                    newKiwi.save();
-                                }
-                            });
-                            console.log(keywords);
+                                       });
+                                   });
+
+                               };
                         }
                     );
             });
