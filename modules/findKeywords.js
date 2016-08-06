@@ -44,6 +44,9 @@ module.exports = function(poll_result){
                 var newsTitle = "1";
                 var newsDesc = "2";
                 var links = [];
+                var url = newsList[0].originallink;
+                var ranking = poll_result[2];
+                var status = poll_result[1];
                 for (var i = 0; i < newsList.length; i++) {
                     newsTitle = newsTitle.concat(newsList[i].title[0]);
                     newsDesc = newsDesc.concat(newsList[i].description[0]);
@@ -100,21 +103,25 @@ module.exports = function(poll_result){
                     Kiwi.findOne({topic: poll_result[0]}, function (err, kiwi) {
                         if (err) console.log(err);
                         if (kiwi) {
-                            Tree.findOne({date:'now'}, function(err, tree){tree.topics.push(kiwi._id); tree.save();});
+                            Tree.findOne({date:'now'}, function(err, tree){
+                                tree.topics.push(kiwi._id);
+                                tree.save();});
                             kiwi.keywords = keywords;
                             kiwi.count++;
+                            kiwi.url = url;
+                            kiwi.ranking = ranking;
+                            kiwi.status = status;
                             kiwi.save();
                         }
                         else {
-                            var newKiwi = new Kiwi({topic: poll_result[0], keywords: keywords, count: 1});
+                            var newKiwi = new Kiwi({topic: poll_result[0], keywords: keywords, count: 1, url: url, ranking: ranking, status: status});
                             newKiwi.save(function (err) {
                                 Tree.findOne({date:'now'}, function(err, tree){tree.topics.push(newKiwi._id); tree.save();});
-
+                                console.log(newKiwi);
                                 Tree.findOne({date: format('yyyy/MM/dd', new Date())}, function (err, tree) {
                                     if (err) console.log(err);
                                     if (tree) {
                                         tree.topics.push(newKiwi._id);
-
                                         tree.save();
                                     }
                                     else {
