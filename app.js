@@ -16,7 +16,7 @@ var async = require('async');
 var mecab = require('mecab-ya');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'public/andia-agency-v2'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
@@ -42,39 +42,9 @@ var polling = asyncPolling(function (end){
     console.log(words);
     end(null, '#' + result + ' wait a second...');
   });
-}, 3000);
+}, 300000);
 
 polling.run();
-
-
-
-var text = '아버지가방에들어가신다';
-
-mecab.pos(text, function (err, result) {
-  console.log(result+'?');
-  /*
-   [ [ '아버지', 'NNG' ],
-   [ '가', 'JKS' ],
-   [ '방', 'NNG' ],
-   [ '에', 'JKB' ],
-   [ '들어가', 'VV' ],
-   [ '신다', 'EP+EC' ] ]
-   */
-});
-
-mecab.morphs(text, function (err, result) {
-  console.log(result+'!');
-  /*
-   [ '아버지', '가', '방', '에', '들어가', '신다' ]
-   */
-});
-
-mecab.nouns(text, function (err, result) {
-  console.log(result);
-  /*
-   [ '아버지', '방' ]
-   */
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
