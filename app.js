@@ -57,7 +57,7 @@ var polling = asyncPolling(function (end){
   ], function(err, result){
     console.log(words);
     for(var i = 0; i < words.length; i++){
-      findKeywords(words[i]);
+      //findKeywords(words[i]);
     }
     end(null, '#' + result + ' wait a second...');
   });
