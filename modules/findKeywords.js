@@ -88,7 +88,7 @@ module.exports = function(poll_result){
                     var j = 0;
                     var keywords = [];
                     while (i < 5) {
-                        if (poll_result[0].contains(sortedMap[j][0])) ;
+                        if (poll_result[0].includes(sortedMap[j][0])) ;
                         else {
                             keywords.push(sortedMap[j]);
                             i++;
@@ -105,16 +105,17 @@ module.exports = function(poll_result){
                         }
                         else {
                             var newKiwi = new Kiwi({topic: poll_result[0], keywords: keywords, count: 1});
-                            newKiwi.save(function (err, newKiwi) {
+                            newKiwi.save(function (err) {
                                 Tree.findOne({date: format('yyyy/MM/dd', new Date())}, function (err, tree) {
                                     if (err) console.log(err);
                                     if (tree) {
-                                        tree.topics.push(newKiwi.ObjectId);
+                                        tree.topics.push(newKiwi._id);
                                     }
                                     else {
-                                        var newTree = new Tree({date: format('yyyy/MM/dd', new Date())});
-                                        newTree.save(function (err, newTree) {
-                                            newTree.topics.push(newKiwi.ObjectId);
+                                        var newTree = new Tree({date: format('2016/08/01', new Date())});
+                                        newTree.topics.push(newKiwi._id);
+                                        newTree.save(function (err) {
+
                                         });
                                     }
 

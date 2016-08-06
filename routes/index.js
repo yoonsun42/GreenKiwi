@@ -1,5 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
+var KiwiSchema = require('../models/Kiwi.js');
+var Kiwi = mongoose.model('Kiwi', KiwiSchema);
+var TreeSchema = require('../models/Tree.js');
+var Tree = mongoose.model('Tree', TreeSchema);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
