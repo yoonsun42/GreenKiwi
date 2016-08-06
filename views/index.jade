@@ -1,5 +1,9 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to 익스프레스
+
+  img(src='http://placehold.it/1400x300')#search-image
+  div
+    ul
+      each val in arr
+        include item.jade

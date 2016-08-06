@@ -6,7 +6,10 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "async": "^2.0.1",
+    "async-polling": "^0.2.1",
     "body-parser": "~1.15.1",
+    "cheerio": "^0.20.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "express": "~4.13.4",
@@ -14,7 +17,10 @@
     "less-middleware": "1.0.x",
     "mecab-ya": "^0.1.1",
     "morgan": "~1.7.0",
+    "replaceall": "^0.1.6",
+    "request": "^2.74.0",
     "serve-favicon": "~2.3.0",
-    "urlencode": "^1.1.0"
+    "urlencode": "^1.1.0",
+    "xml2js": "^0.4.17"
   }
 }

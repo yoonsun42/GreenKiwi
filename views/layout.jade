@@ -1,7 +1,17 @@
 doctype html
 html
   head
-    title= title
+    title #{title}
+    link(rel='stylesheet', type='text/css', href='https://fonts.googleapis.com/earlyaccess/nanumgothic.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    header#header
+      img(src="http://placehold.it/200x60")
+      ul
+        each i in [1,2,3]
+          li.for-space
+        li
+          a(href='/') 실시간이슈
+        li
+          a(href='/') 히스토리
     block content
