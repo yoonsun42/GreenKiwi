@@ -4,11 +4,10 @@
 var urlencode = require('urlencode');
 var https = require('https');
 var mecab = require('mecab-ya');
-var wordMap = new Map();
 var async = require('async');
 
 module.exports = function(poll_result){
-
+    var wordMap = new Map();
     var client_id = 'PON8429nB5fozBKQR0bi';
     var client_secret = 'XmvIFNtvxN';
     var host = 'openapi.naver.com';
@@ -71,13 +70,13 @@ module.exports = function(poll_result){
                                             }
                                         )
                                     }
-                                    console.log(sortedMap);
                                     callback(null, 1);
                                 });
                             });
 
                         }], function(err,result) {
-                            console.log(sortedMap);
+                            console.log(poll_result[0]);  
+			    console.log(sortedMap);
                         }
                     );
             });
