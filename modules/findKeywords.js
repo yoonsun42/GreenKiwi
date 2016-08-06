@@ -88,7 +88,7 @@ module.exports = function(poll_result){
                     var j = 0;
                     var keywords = [];
                     while (i < 5) {
-                        if (poll_result[0].contains(sortedMap[j][0])) ;
+                        if (poll_result[0].includes(sortedMap[j][0])) ;
                         else {
                             keywords.push(sortedMap[j]);
                             i++;
@@ -110,11 +110,13 @@ module.exports = function(poll_result){
                                     if (err) console.log(err);
                                     if (tree) {
                                         tree.topics.push(newKiwi.ObjectId);
+					tree.save();
                                     }
                                     else {
-                                        var newTree = new Tree({date: format('yyyy/MM/dd', new Date())});
+                                        var newTree = new Tree({date: format('yyyy/MM/dd', new Date()), topics: []});
+					console.log(newTree.topics);
+					newTree.topics.push(newKiwi.ObjectId);
                                         newTree.save(function (err, newTree) {
-                                            newTree.topics.push(newKiwi.ObjectId);
                                         });
                                     }
 
