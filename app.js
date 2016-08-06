@@ -63,7 +63,7 @@ var polling = asyncPolling(function (end){
   });
 }, 30000);
 
-//polling.run();
+polling.run();
 
 //findKeywords();
 
