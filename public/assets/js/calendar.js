@@ -1,7 +1,8 @@
 /* Kurien / Kurien's Blog / http://blog.kurien.co.kr */
 /* 주석만 제거하지 않는다면, 어떤 용도로 사용하셔도 좋습니다. */
 
-function kCalendar(id, date) {
+
+function kCalendar(id, selectedDate, date) {
     var kCalendar = document.getElementById(id);
 
     if( typeof( date ) !== 'undefined' ) {
@@ -53,11 +54,10 @@ function kCalendar(id, date) {
     //10월 이하라면 앞에 0을 붙여준다.
 
     var calendar = '';
-
     calendar += '<div id="header">';
-    calendar += '			<span><a href="#" class="button left" onclick="kCalendar(\'' +  id + '\', \'' + prevDate + '\')"><</a></span>';
-    calendar += '			<span id="date">' + currentYear + '년 ' + currentMonth + '월</span>';
-    calendar += '			<span><a href="#" class="button right" onclick="kCalendar(\'' + id + '\', \'' + nextDate + '\')">></a></span>';
+    calendar += '			<span><a href="#" class="button left" onclick="kCalendar(\'' +  id + '\', \''+'undefined'+ '\', \'' + prevDate + '\')"><   </a></span>';
+    calendar += '			<span id="date">    ' + currentYear + '년 ' + currentMonth + '월    </span>';
+    calendar += '			<span><a href="#" class="button right" onclick="kCalendar(\'' + id + '\', \''+'undefined'+ '\', \'' + nextDate + '\')">   ></a></span>';
     calendar += '		</div>';
     calendar += '		<table border="0" cellspacing="0" cellpadding="0">';
     calendar += '			<caption>' + currentYear + '년 ' + currentMonth + '월 달력</caption>';
@@ -76,16 +76,17 @@ function kCalendar(id, date) {
 
     var dateNum = 1 - currentDay;
 
-    console.log(currentDay+"???????????????");
 
     for(var i = 0; i < week; i++) {
-        console.log(dateNum+ '-');
         calendar += '			<tr>';
+        var tempDate = new Date();
         for(var j = 0; j < 7; j++, dateNum++) {
-            if(dateNum== currentDate)
+            if(dateNum== currentDate )
             {
-                calendar += '				<td class="' + dateString[j]+' today' + '">'+ dateNum + '</td>';
-                continue;
+                if(tempDate.getFullYear()==currentYear && tempDate.getMonth()==(currentMonth-1) && tempDate.getDate()==currentDate) {
+                    calendar += '				<td class="' + dateString[j] + ' today' + '">' + dateNum + '</td>';
+                    continue;
+                }
             }
             if( dateNum < 1 || dateNum > currentLastDate ) {
                 calendar += '				<td class="' + dateString[j] + '"> </td>';
@@ -100,4 +101,20 @@ function kCalendar(id, date) {
     calendar += '		</table>';
 
     kCalendar.innerHTML = calendar;
+
+    $('tbody').mouseover(function(){
+        $('body').css('cursor', 'pointer');
+    }).mouseout(function(){
+        $('body').css('cursor', 'auto');
+    })
+
+    $('td').click(function () {
+        if($(this).text()==' ') return;
+       // console.log('test'+$('.selected'));
+        if($('.selected')!='undefined')
+            $('.selected').removeClass('selected');
+        $(this).addClass('selected');
+        console.log($(this).text());
+    })
+
 }
