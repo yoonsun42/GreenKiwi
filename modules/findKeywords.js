@@ -44,8 +44,8 @@ module.exports = function(poll_result){
                     newsDesc = newsDesc.concat(newsList[i].description[0]);
                     links.push(newsList[i].link);
                 }
-
                     var sortedMap = [];
+                    var wordMap = new Map();
                     async.series([
                         function(callback) {
                             mecab.nouns(newsTitle, function (err, result) {
