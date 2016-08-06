@@ -11,7 +11,8 @@ module.exports = function(words, callback){
         var $ = cheerio.load(html);
         var liList = $('#ranklist').children('dd').children('ol').children('li');
         for (var i = 0; i < liList.length; i++) {
-            words.push($([liList[i]]).children('a').attr('title'));
+            var tempArr = [$([liList[i]]).children('a').attr('title'),$([liList[i]]).attr('class')];
+            words.push(tempArr);
         }
         callback(null, 0);
     });

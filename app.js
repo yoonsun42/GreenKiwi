@@ -31,7 +31,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
-var words = [];
+var words = new Array();
+words[0] = new Array();
+words[1] = new Array();
 var polling = asyncPolling(function (end){
   async.series([
      function(callback){
