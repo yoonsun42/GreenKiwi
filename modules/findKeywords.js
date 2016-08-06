@@ -97,34 +97,32 @@ module.exports = function(poll_result){
                         j++;
                     }
 
+		     
                     Kiwi.findOne({topic: poll_result[0]}, function (err, kiwi) {
                         if (err) console.log(err);
                         if (kiwi) {
-                            kiwi.keywords = keywords;
+                            Tree.findOne({date:'now'}, function(err, tree){tree.topics.push(kiwi._id); tree.save();}); 
+			    kiwi.keywords = keywords;
                             kiwi.count++;
                             kiwi.save();
                         }
                         else {
                             var newKiwi = new Kiwi({topic: poll_result[0], keywords: keywords, count: 1});
                             newKiwi.save(function (err) {
+				            Tree.findOne({date:'now'}, function(err, tree){tree.topics.push(newKiwi._id); tree.save();});
                                 Tree.findOne({date: format('yyyy/MM/dd', new Date())}, function (err, tree) {
                                     if (err) console.log(err);
                                     if (tree) {
                                         tree.topics.push(newKiwi._id);
-					                    tree.save();
+                                        tree.save();
                                     }
                                     else {
-                                       var newTree = new Tree();
-                                        newTree.date =  format('yyyy/MM/dd', new Date());
-                                        newTree.topics = [];
-
-                                        if(newTree.topics!=undefined)
-                                            newTree.topics.push(newKiwi._id);
+                                        var newTree = new Tree;
+					newTree.date = format('yyyy/MM/dd', new Date());
+					newTree.topics = [];
+					newTree.topics.push(newKiwi._id);
                                         newTree.save(function (err) {
-                                            console.log('test');
-                                            console.log(newTree.date);
-
-                                        });
+					});
                                     }
 
                                 });
