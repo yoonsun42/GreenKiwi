@@ -4,10 +4,10 @@
 var urlencode = require('urlencode');
 var https = require('https');
 var mecab = require('mecab-ya');
-var wordMap = new Map();
+
 var async = require('async');
 
-module.exports = function(){
+module.exports = function(poll_result){
 
     var client_id = 'PON8429nB5fozBKQR0bi';
     var client_secret = 'XmvIFNtvxN';
@@ -39,6 +39,7 @@ module.exports = function(){
                     newsDesc = newsDesc.concat(newsList[i].description[0]);
                 }
                     var sortedMap = [];
+                    var wordMap = new Map();
                     async.series([
                         function(callback) {
                             mecab.nouns(newsTitle, function (err, result) {
@@ -68,13 +69,11 @@ module.exports = function(){
                                             }
                                         )
                                     }
-                                    console.log(sortedMap);
                                     callback(null, 1);
                                 });
                             });
 
                         }], function(err,result) {
-                            console.log(sortedMap);
                         }
                     );
             });
