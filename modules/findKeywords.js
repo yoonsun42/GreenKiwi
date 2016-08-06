@@ -4,7 +4,6 @@
 var urlencode = require('urlencode');
 var https = require('https');
 var mecab = require('mecab-ya');
-
 var async = require('async');
 
 module.exports = function(poll_result){
@@ -17,6 +16,7 @@ module.exports = function(poll_result){
     var xml2js = require('xml2js');
     var parser = new xml2js.Parser();
     var replaceall = require('replaceall');
+    var wordMap = new Map();
 
     var options = {
         host: host,
@@ -26,11 +26,11 @@ module.exports = function(poll_result){
         headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
     };
 
-
     var req = https.request(options, function(res) {
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
             parser.parseString(chunk, function(err,result){
+                if(!result.rss) return console.log("API response error");
                 var newsList = result.rss.channel[0].item;
                 var newsTitle = "1";
                 var newsDesc = "2";
@@ -74,6 +74,19 @@ module.exports = function(poll_result){
                             });
 
                         }], function(err,result) {
+                            console.log(sortedMap);
+                            var i = 0;
+                            var j = 0;
+                            var keywords = [];
+                            while(i<5){
+                                if(poll_result[0].contains(sortedMap[j][0])) ;
+                                else{
+                                    keywords.push(sortedMap[j]);
+                                    i++;
+                                }
+                                j++;
+                            }
+                            console.log(keywords);
                         }
                     );
             });
