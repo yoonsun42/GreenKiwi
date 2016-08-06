@@ -117,11 +117,12 @@ module.exports = function(poll_result){
                             var newKiwi = new Kiwi({topic: poll_result[0], keywords: keywords, count: 1, url: url, ranking: ranking, status: status});
                             newKiwi.save(function (err) {
                                 Tree.findOne({date:'now'}, function(err, tree){tree.topics.push(newKiwi._id); tree.save();});
-                                console.log(newKiwi);
+
                                 Tree.findOne({date: format('yyyy/MM/dd', new Date())}, function (err, tree) {
                                     if (err) console.log(err);
                                     if (tree) {
                                         tree.topics.push(newKiwi._id);
+
                                         tree.save();
                                     }
                                     else {
