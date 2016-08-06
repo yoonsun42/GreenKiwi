@@ -19,38 +19,8 @@ block content
     .services-container
       .container
         .row
-          .col-sm-6
-            .service.wow.fadeInUp
-              .service-icon
-                i.fa.fa-eye
-              h3 Beautiful Websites
-              p
-                | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et...
-              a.big-link-1(href='/services') Read more
-          .col-sm-6
-            .service.wow.fadeInDown
-              .service-icon
-                i.fa.fa-table
-              h3 Responsive Layout
-              p
-                | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et...
-              a.big-link-1(href='/services') Read more
-          .col-sm-6
-            .service.wow.fadeInUp
-              .service-icon
-                i.fa.fa-magic
-              h3 Awesome Logos
-              p
-                | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et...
-              a.big-link-1(href='/services') Read more
-          .col-sm-6
-            .service.wow.fadeInDown
-              .service-icon
-                i.fa.fa-print
-              h3 High Res Prints
-              p
-                | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et...
-              a.big-link-1(href='/services') Read more
+          each val in arr
+            include item.jade
     // Latest work
     .work-container
       .container
@@ -168,61 +138,25 @@ block content
       .container
         .row
           .col-sm-3.footer-box.wow.fadeInUp
-            h4 About Us
-            .footer-box-text
-              p
-                | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.
-                | Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.
-              p
-                a(href='/about') Read more...
+
           .col-sm-3.footer-box.wow.fadeInDown
-            h4 Email Updates
-            .footer-box-text.footer-box-text-subscribe
-              p Enter your email and you'll be one of the first to get new updates:
-              form(role='form', action='assets/subscribe.php', method='post')
-                .form-group
-                  label.sr-only(for='subscribe-email') Email address
-                  input#subscribe-email.subscribe-email(type='text', name='email', placeholder='Email...')
-                button.btn(type='submit') Subscribe
-              p.success-message
-              p.error-message
+
           .col-sm-3.footer-box.wow.fadeInUp
-            h4 Flickr Photos
-            .footer-box-text.flickr-feed
+
           .col-sm-3.footer-box.wow.fadeInDown
             h4 Contact Us
             .footer-box-text.footer-box-text-contact
               p
-                i.fa.fa-map-marker
-                |  Address: Via Principe Amedeo 9, 10100, Torino, TO, Italy
-              p
-                i.fa.fa-phone
-                |  Phone: 0039 333 12 68 347
-              p
-                i.fa.fa-user
-                |  Skype: Andia_Agency
+                i.fa.fa-envelope
+                | Jaejeon&nbsp:&nbsp
+                a(href='#') jaejeon9@gmail.com
               p
                 i.fa.fa-envelope
-                |  Email:
-                a(href='') contact@andia.co.uk
+                | Yoonsun&nbsp:&nbsp
+                a(href='#') smartys6964@gmail.com
         .row
           .col-sm-12.wow.fadeIn
             .footer-border
-        .row
-          .col-sm-7.footer-copyright.wow.fadeIn
-            p
-              | Copyright 2012 Andia - All rights reserved. Template by
-              a(href='http://azmind.com') Azmind
-              | .
-          .col-sm-5.footer-social.wow.fadeIn
-            a(href='#')
-              i.fa.fa-facebook
-            a(href='#')
-              i.fa.fa-dribbble
-            a(href='#')
-              i.fa.fa-twitter
-            a(href='#')
-              i.fa.fa-pinterest
     // Javascript
     script(src='assets/js/jquery-1.11.1.min.js')
     script(src='assets/bootstrap/js/bootstrap.min.js')
