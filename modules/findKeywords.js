@@ -5,6 +5,10 @@ var urlencode = require('urlencode');
 var https = require('https');
 var mecab = require('mecab-ya');
 var async = require('async');
+var mongoose = require('mongoose');
+var KiwiSchema = require('../models/Kiwi.js');
+var Kiwi = mongoose.model('Kiwi', KiwiSchema);
+var format = require('date-format');
 
 module.exports = function(poll_result){
 
@@ -30,13 +34,15 @@ module.exports = function(poll_result){
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
             parser.parseString(chunk, function(err,result){
-                if(!result.rss) return console.log("API response error");
+                if(!result) return console.log("API response error");
                 var newsList = result.rss.channel[0].item;
                 var newsTitle = "1";
                 var newsDesc = "2";
+                var links = [];
                 for (var i = 0; i < newsList.length; i++) {
                     newsTitle = newsTitle.concat(newsList[i].title[0]);
                     newsDesc = newsDesc.concat(newsList[i].description[0]);
+                    links.push(newsList[i].link);
                 }
 
                     var sortedMap = [];
@@ -86,6 +92,35 @@ module.exports = function(poll_result){
                                 }
                                 j++;
                             }
+
+                            Kiwi.findOne({ date : format('yyyy/MM/dd', new Date())}, function(err, item){
+                                if(item){
+                                    var flag = false;
+                                    for(var i = 0; i < item.topics.length && !flag; i++){
+                                        if(item.topics[i].topic == poll_result[0]) {
+                                            flag = true;
+                                            item.topics[i].count++;
+                                            item.topics[i].keywords = keywords;
+                                            item.topics[i].links = links;
+                                        }
+                                    }
+                                    if(!flag){ item.topics.push({
+                                        topic: poll_result[0], count: 1, keywords: keywords, links: links
+                                    }); }
+
+                                    item.save();
+                                }
+                                else{
+                                    var newKiwi = new Kiwi({ date: format('yyyy/MM/dd', new Date()),
+                                    topics: [{
+                                        topic : poll_result[0],
+                                        count : 1,
+                                        keywords: keywords,
+                                        links : links
+                                    }]});
+                                    newKiwi.save();
+                                }
+                            });
                             console.log(keywords);
                         }
                     );
