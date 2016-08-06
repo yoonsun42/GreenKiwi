@@ -13,10 +13,12 @@ router.get('/', function(req, res, next) {
   
   Tree.findOne({date: 'now'}, function(err, tree){
     var idArr = tree.topics;
-    for(var i = 0; i < idArr; i++){
+    for(var i = 0; i < idArr.length; i++){
 	Kiwi.findOne({_id: idArr[i]}, function(err, kiwi){
-	  arr.push([kiwi.topic, ''+i, [kiwi.keywords[0], kiwi.keywords[1], kiwi.keywords[2], kiwi.keywords[3], kiwi.keywords[4]]]);
-	  if(arr.length == idArr.length) res.render('index', {title: 'GreenKiwi', arr: arr});
+	  arr.push([kiwi.topic, ''+i , [kiwi.keywords[0], kiwi.keywords[1], kiwi.keywords[2], kiwi.keywords[3], kiwi.keywords[4]]]);
+
+      if(arr.length == idArr.length)
+	    res.render('index', {title: 'GreenKiwi', arr: arr});
 	});
     }
 

@@ -23,6 +23,7 @@ module.exports = function(poll_result){
     var xml2js = require('xml2js');
     var parser = new xml2js.Parser();
     var replaceall = require('replaceall');
+    var wordMap = new Map();
 
     var options = {
         host: host,
@@ -37,8 +38,8 @@ module.exports = function(poll_result){
         res.on('data', function (chunk) {
             parser.parseString(chunk, function (err, result) {
                 if (!result) return console.log("API response error");
-                if(!result.rss) return console.log("API response error of rss");
-                if(!result.rss.channel) return console.log("API response error of channel");
+                if (!result.rss) return console.log("API response error");
+                if (!result.rss.channel) return console.log("API response error");
                 var newsList = result.rss.channel[0].item;
                 var newsTitle = "1";
                 var newsDesc = "2";
@@ -84,45 +85,46 @@ module.exports = function(poll_result){
                         });
 
                     }], function (err, result) {
-                    //console.log(sortedMap);
                     var i = 0;
                     var j = 0;
                     var keywords = [];
                     while (i < 5) {
                         if (poll_result[0].includes(sortedMap[j][0])) ;
                         else {
-                            keywords.push(sortedMap[j]);
+                            keywords.push(sortedMap[j][0]);
                             i++;
                         }
                         j++;
                     }
 
-		     
                     Kiwi.findOne({topic: poll_result[0]}, function (err, kiwi) {
                         if (err) console.log(err);
                         if (kiwi) {
-                            Tree.findOne({date:'now'}, function(err, tree){tree.topics.push(kiwi._id); tree.save();}); 
-			    kiwi.keywords = keywords;
+                            Tree.findOne({date:'now'}, function(err, tree){tree.topics.push(kiwi._id); tree.save();});
+                            kiwi.keywords = keywords;
                             kiwi.count++;
                             kiwi.save();
                         }
                         else {
                             var newKiwi = new Kiwi({topic: poll_result[0], keywords: keywords, count: 1});
                             newKiwi.save(function (err) {
-				            Tree.findOne({date:'now'}, function(err, tree){tree.topics.push(newKiwi._id); tree.save();});
+                                Tree.findOne({date:'now'}, function(err, tree){tree.topics.push(newKiwi._id); tree.save();});
+
                                 Tree.findOne({date: format('yyyy/MM/dd', new Date())}, function (err, tree) {
                                     if (err) console.log(err);
                                     if (tree) {
                                         tree.topics.push(newKiwi._id);
+
                                         tree.save();
                                     }
                                     else {
                                         var newTree = new Tree;
-					newTree.date = format('yyyy/MM/dd', new Date());
-					newTree.topics = [];
-					newTree.topics.push(newKiwi._id);
+                                        newTree.date = format('yyyy/MM/dd', new Date());
+                                        newTree.topics = [];
+                                        newTree.topics.push(newKiwi._id);
                                         newTree.save(function (err) {
-					});
+                                        });
+
                                     }
 
                                 });
