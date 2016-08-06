@@ -1,6 +1,7 @@
 /* Kurien / Kurien's Blog / http://blog.kurien.co.kr */
 /* 주석만 제거하지 않는다면, 어떤 용도로 사용하셔도 좋습니다. */
 
+
 function kCalendar(id, date) {
     var kCalendar = document.getElementById(id);
 
@@ -55,9 +56,9 @@ function kCalendar(id, date) {
     var calendar = '';
 
     calendar += '<div id="header">';
-    calendar += '			<span><a href="#" class="button left" onclick="kCalendar(\'' +  id + '\', \'' + prevDate + '\')"><</a></span>';
-    calendar += '			<span id="date">' + currentYear + '년 ' + currentMonth + '월</span>';
-    calendar += '			<span><a href="#" class="button right" onclick="kCalendar(\'' + id + '\', \'' + nextDate + '\')">></a></span>';
+    calendar += '			<span><a href="#" class="button left" onclick="kCalendar(\'' +  id + '\', \'' + prevDate + '\')"><   </a></span>';
+    calendar += '			<span id="date">    ' + currentYear + '년 ' + currentMonth + '월    </span>';
+    calendar += '			<span><a href="#" class="button right" onclick="kCalendar(\'' + id + '\', \'' + nextDate + '\')">   ></a></span>';
     calendar += '		</div>';
     calendar += '		<table border="0" cellspacing="0" cellpadding="0">';
     calendar += '			<caption>' + currentYear + '년 ' + currentMonth + '월 달력</caption>';
@@ -100,4 +101,10 @@ function kCalendar(id, date) {
     calendar += '		</table>';
 
     kCalendar.innerHTML = calendar;
+
+    $('tbody').mouseover(function(){
+        $('body').css('cursor', 'pointer');
+    }).mouseout(function(){
+        $('body').css('cursor', 'auto');
+    })
 }

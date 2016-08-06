@@ -921,16 +921,38 @@ footer {
   font-style: italic;
 }
 
+tbody{
+  cusor:pointer;
+}
+
+
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
-* {font-family: 'Nanum Gothic', serif;}
+//* {font-family: 'Nanum Gothic', serif;}
 
-#kCalendar {width: 250px; height: 250px; border: 1px solid black;}
+#kCalendar {margin-top: 50px; width: 400px; height: 350px;
 
-#kCalendar #header {height: 50px; line-height: 50px; text-align: center; font-size: 18px; font-weight: bold}
-#kCalendar .button {color: #000; text-decoration: none;}
+   margin-left:auto; margin-right:auto; font-size: 13px;
+  background-color: #f8f8f8;
+}
 
-#kCalendar table {width: 250px; height: 200px;}
+#kCalendar #header { width : 400px; height: 50px; line-height: 50px; text-align: center; font-size: 17px; font-weight: bold;}
+#kCalendar .button{
+  color: #000; text-decoration: none;
+
+}
+
+#kCalendar thead{background: #c2c2c2; text-align:center;}
+#kCalendar tbody{}
+
+#kCalendar table {width: 400px; height: 300px;}
 #kCalendar caption {display: none;}
+
+#kCalendar .button {color: dimgray;
+  margin-left : 10px;
+  margin-right : 10px;
+}
+
+
 
 #kCalendar .sun {text-align: center; color: deeppink;}
 #kCalendar .mon {text-align: center;}
@@ -939,3 +961,8 @@ footer {
 #kCalendar .thu {text-align: center;}
 #kCalendar .fri {text-align: center;}
 #kCalendar .sat {text-align: center; color: deepskyblue;}
+
+//체크된걸 #23b301 오늘을 그레이;
+#kCalendar .today{background: #23b301; color: white; -moz-border-radius: 28px;
+  -webkit-border-radius: 28px;
+  border-radius: 28px;}
