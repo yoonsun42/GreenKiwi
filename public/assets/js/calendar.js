@@ -109,6 +109,7 @@ function kCalendar(id, selectedDate, date) {
     })
 
     $('td').click(function () {
+        if($(this).text()==' ') return;
        // console.log('test'+$('.selected'));
         if($('.selected')!='undefined')
             $('.selected').removeClass('selected');
