@@ -12,6 +12,7 @@ function kCalendar(id, date) {
     } else {
         var date = new Date();
     }
+    console.log('date는 ' + date);
     var currentYear = date.getFullYear();
     //년도를 구함
 
@@ -82,11 +83,14 @@ function kCalendar(id, date) {
     for(var i = 0; i < week; i++) {
         console.log(dateNum+ '-');
         calendar += '			<tr>';
+        var tempDate = new Date();
         for(var j = 0; j < 7; j++, dateNum++) {
-            if(dateNum== currentDate)
+            if(dateNum== currentDate )
             {
-                calendar += '				<td class="' + dateString[j]+' today' + '">'+ dateNum + '</td>';
-                continue;
+                if(tempDate.getFullYear()==currentYear && tempDate.getMonth()==(currentMonth-1) && tempDate.getDate()==currentDate) {
+                    calendar += '				<td class="' + dateString[j] + ' today' + '">' + dateNum + '</td>';
+                    continue;
+                }
             }
             if( dateNum < 1 || dateNum > currentLastDate ) {
                 calendar += '				<td class="' + dateString[j] + '"> </td>';
