@@ -83,7 +83,7 @@ module.exports = function(poll_result){
                         });
 
                     }], function (err, result) {
-                    console.log(sortedMap);
+                    //console.log(sortedMap);
                     var i = 0;
                     var j = 0;
                     var keywords = [];
@@ -96,28 +96,32 @@ module.exports = function(poll_result){
                         j++;
                     }
 
+		     
                     Kiwi.findOne({topic: poll_result[0]}, function (err, kiwi) {
                         if (err) console.log(err);
                         if (kiwi) {
-                            kiwi.keywords = keywords;
+                            Tree.findOne({date:'now'}, function(err, tree){tree.topics.push(kiwi._id); tree.save();}); 
+			    kiwi.keywords = keywords;
                             kiwi.count++;
                             kiwi.save();
                         }
                         else {
                             var newKiwi = new Kiwi({topic: poll_result[0], keywords: keywords, count: 1});
-                            newKiwi.save(function (err, newKiwi) {
+                            newKiwi.save(function (err) {
+				Tree.findOne({date:'now'}, function(err, tree){tree.topics.push(newKiwi._id); tree.save();});
                                 Tree.findOne({date: format('yyyy/MM/dd', new Date())}, function (err, tree) {
                                     if (err) console.log(err);
                                     if (tree) {
-                                        tree.topics.push(newKiwi.ObjectId);
+                                        tree.topics.push(newKiwi._id);
 					tree.save();
                                     }
                                     else {
-                                        var newTree = new Tree({date: format('yyyy/MM/dd', new Date()), topics: []});
-					console.log(newTree.topics);
-					newTree.topics.push(newKiwi.ObjectId);
-                                        newTree.save(function (err, newTree) {
-                                        });
+                                        var newTree = new Tree;
+					newTree.date = format('yyyy/MM/dd', new Date());
+					newTree.topics = [];
+					newTree.topics.push(newKiwi._id);
+                                        newTree.save(function (err) {
+					});
                                     }
 
                                 });

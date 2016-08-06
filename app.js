@@ -25,6 +25,11 @@ db.once('open', function(){
 });
 mongoose.connect('mongodb://52.78.23.87/greenkiwidb');
 
+var KiwiSchema = require('./models/Kiwi.js');
+var Kiwi = mongoose.model('Kiwi', KiwiSchema);
+var TreeSchema = require('./models/Tree.js');
+var Tree = mongoose.model('Tree', TreeSchema);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'public/andia-agency-v2'));
 app.set('view engine', 'jade');
@@ -45,14 +50,17 @@ var words = new Array();
 words[0] = new Array();
 words[1] = new Array();
 
-var KiwiSchema  = require('./models/Kiwi.js');
-var Kiwi = mongoose.model('Kiwi', KiwiSchema);
-
 var polling = asyncPolling(function (end){
   async.series([
      function(callback){
         words = [];
         poll(words, callback);
+     },
+     function(callback){
+	Tree.findOne({date: 'now'}, function(err,tree){
+	    tree = new Tree({date: 'now'});
+	    tree.save(function(err){callback(null,1)});
+	});
      }
   ], function(err, result){
     console.log(words);
