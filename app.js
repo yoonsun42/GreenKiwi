@@ -16,7 +16,7 @@ var async = require('async');
 var mecab = require('mecab-ya');
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'public/andia-agency-v2'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
@@ -39,15 +39,18 @@ var polling = asyncPolling(function (end){
         poll(words, callback);
      }
   ], function(err, result){
-    //console.log(words);
+    console.log(words);
     end(null, '#' + result + ' wait a second...');
   });
-}, 3000);
+}, 300000);
 
 polling.run();
 
+<<<<<<< HEAD
 findKeywords();
 
+=======
+>>>>>>> a3236cf08d15eb224600188b614a868b4b19320e
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

@@ -1,6 +1,11 @@
-block testblock
-    li#item
-        span #{val[0]}
-        span #{val[1]}
-        each word in val[2]
-            span #{word}
+li#item
+    div.item-div
+        h4.item-topic #{val[0]}
+        div
+            h5.item-rank #{val[1]}
+            each word in val[2]
+
+    span #{val[0]}
+    span #{val[1]}
+    each word in val[2]
+        span #{word}
