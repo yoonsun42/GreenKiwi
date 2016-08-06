@@ -4,13 +4,9 @@
 var mongoose = require('mongoose');
 
 var KiwiSchema = new mongoose.Schema({
-   date : String, // "yyyy/mm/dd"
-   topics : [{
-       topic : String,
-       count : Number,
-       keywords : [{word : String}],
-       links : [{link : String}]
-   }]
+   topic: String,
+    keywords: [String],
+    count: Number
 });
 
 module.exports = KiwiSchema;
