@@ -10,8 +10,8 @@ module.exports = function(words, callback){
         if (error) {throw error;}
         var $ = cheerio.load(html);
         var liList = $('#ranklist').children('dd').children('ol').children('li');
-        for (var i = 0; i < liList.length; i++) {
-            var tempArr = [$([liList[i]]).children('a').attr('title'),$([liList[i]]).attr('class')];
+        for (var i = 0; i < 10; i++) {
+            var tempArr = [$([liList[i]]).children('a').attr('title'),$([liList[i]]).attr('class'), i];
             words.push(tempArr);
         }
         callback(null, 0);
