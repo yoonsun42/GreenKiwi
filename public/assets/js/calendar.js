@@ -20,6 +20,7 @@ function kCalendar(id, date) {
     var currentDate = date.getDate();
     //오늘 일자.
 
+
     date.setDate(1);
     var currentDay = date.getDay();
     //이번달 1일의 요일은 출력. 0은 일요일 6은 토요일
@@ -75,9 +76,17 @@ function kCalendar(id, date) {
 
     var dateNum = 1 - currentDay;
 
+    console.log(currentDay+"???????????????");
+
     for(var i = 0; i < week; i++) {
+        console.log(dateNum+ '-');
         calendar += '			<tr>';
         for(var j = 0; j < 7; j++, dateNum++) {
+            if(dateNum== currentDate)
+            {
+                calendar += '				<td class="' + dateString[j]+' today' + '">'+ dateNum + '</td>';
+                continue;
+            }
             if( dateNum < 1 || dateNum > currentLastDate ) {
                 calendar += '				<td class="' + dateString[j] + '"> </td>';
                 continue;
