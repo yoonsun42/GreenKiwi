@@ -23,6 +23,16 @@ app.use(cookieParser());
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/mecab', function(req,res,next){
+
+var mecab = require('mecab-ya');
+var text = "아버지가 방에 들어가신다";
+mecab.pos(text, function(err,result){
+	res.send(result);
+});
+
+});
+
 app.use('/', routes);
 app.use('/users', users);
 
