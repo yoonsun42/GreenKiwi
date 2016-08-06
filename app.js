@@ -46,11 +46,8 @@ var polling = asyncPolling(function (end){
 
 polling.run();
 
-<<<<<<< HEAD
 findKeywords();
 
-=======
->>>>>>> a3236cf08d15eb224600188b614a868b4b19320e
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
