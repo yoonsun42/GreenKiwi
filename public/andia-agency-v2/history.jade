@@ -1,0 +1,14 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        title 달력
+        link(href='assets/css/style.css', rel='stylesheet')
+        script(src='assets/js/calendar.js')
+    body
+        #kCalendar
+        script.
+            window.onload = function () {
+                kCalendar('kCalendar');
+            };
+
