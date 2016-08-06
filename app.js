@@ -15,6 +15,16 @@ var findKeywords = require('./modules/findKeywords.js');
 var async = require('async');
 var mecab = require('mecab-ya');
 
+var format = require('date-format');
+
+var mongoose = require('mongoose');
+var db = mongoose.connection;
+db.on('error', console.error);
+db.once('open', function(){
+  console.log("Connected to mongod server");
+});
+mongoose.connect('mongodb://52.78.23.87/greenkiwidb');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'public/andia-agency-v2'));
 app.set('view engine', 'jade');
@@ -34,6 +44,10 @@ app.use('/users', users);
 var words = new Array();
 words[0] = new Array();
 words[1] = new Array();
+
+var KiwiSchema  = require('./models/Kiwi.js');
+var Kiwi = mongoose.model('Kiwi', KiwiSchema);
+
 var polling = asyncPolling(function (end){
   async.series([
      function(callback){
@@ -42,13 +56,16 @@ var polling = asyncPolling(function (end){
      }
   ], function(err, result){
     console.log(words);
+    for(var i = 0; i < words.length; i++){
+      findKeywords(words[i]);
+    }
     end(null, '#' + result + ' wait a second...');
   });
-}, 300000);
+}, 30000);
 
 polling.run();
 
-findKeywords();
+//findKeywords();
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
