@@ -107,8 +107,10 @@ module.exports = function(poll_result){
                                     if(!flag){ item.topics.push({
                                         topic: poll_result[0], count: 1, keywords: keywords, links: links
                                     }); }
+                                    while(!(i == item.topics.length || flag)){
+                                        item.save();
+                                    }
 
-                                    item.save();
                                 }
                                 else{
                                     var newKiwi = new Kiwi({ date: format('yyyy/MM/dd', new Date()),
