@@ -39,6 +39,7 @@ router.get('/', function(req, res, next) {
   var arr = [];
   Tree.findOne({date: 'now'}, function(err, tree){
     var idArr = tree.topics;
+    var tempArr = [];
     for(var i = 0; i < idArr.length; i++){
 	Kiwi.findOne({_id: idArr[i]}, function(err, kiwi){
 	  arr.push([kiwi.topic, ''+i , [kiwi.keywords[0], kiwi.keywords[1], kiwi.keywords[2], kiwi.keywords[3], kiwi.keywords[4]], kiwi.url, kiwi.ranking+1, kiwi.status]);
